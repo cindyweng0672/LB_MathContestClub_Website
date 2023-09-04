@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Daily Question{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+  <div class="row" style="padding-top: 0.5em;">
+    <div class="col-md-2">
+      <span>
+        Please select a date:
+      </span>
+    </div>  
+    <div class="col">
+      <input id="datePicker"/>
+    </div>
+  </div>
+  <div class="row" style="padding-top: 0.5rem;">
+    <div class="col">
+    <img id="question-img" alt="question image." style="width:80%; object-fit: contain; display:block;"/>
+    </div>
+  </div>
+</div>
+  <link rel="stylesheet" href="../../static/datePicker/css/deskyCal.css" />
+  <script src="../../static/datePicker/js/deskycal.js"></script>
+  <script src="../../static/question.js"></script>
+  {% block interaction %}  
+  <script>  
+    initDeskyCalendar(
+      "datePicker",
+      "single",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      date_picking_callback_basic
+    );
+    let now = new Date();
+    date_picking_callback_basic(now);
+
+    function date_picking_callback_basic(d) {
+      date = assembleDate(d);
+      fetchImage(date);
+    }
+  </script>
+  {% endblock %}
+{% endblock %}

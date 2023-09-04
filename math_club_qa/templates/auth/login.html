@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Log In{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class = row style="display: flex; justify-content: center; align-items: center">
+  <form method="post">
+    <label for="userName">Username</label>
+    <input name="userName" id="userName" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+    <p></p>
+    <input type="submit" value="Log In"> 
+  </form>
+</div>
+{% endblock %}

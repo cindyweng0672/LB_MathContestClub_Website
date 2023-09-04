@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Home Page{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div id="homePageImageCarousel" class="carousel slide" data-ride="carousel">
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+          display: block;
+          width: 600px;
+          height: 600px;
+          object-fit: contain;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .carousel-control-next,
+        .carousel-control-prev, 
+        .carousel-indicators{
+            filter: invert(100%);
+        }
+    </style>
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#homePageImageCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#homePageImageCarousel" data-slide-to="1"></li>
+      <li data-target="#homePageImageCarousel" data-slide-to="2"></li>
+    </ul>
+  
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{url_for('static', filename='images/MCC_logo.jpg')}}" alt="MCC_LOGO">
+      </div>
+      <div class="carousel-item">
+        <img src="{{url_for('static', filename='images/carnival.jpg')}}" alt="carnival">
+      </div>
+      <div class="carousel-item">
+        <img src="{{url_for('static', filename='images/quaterly_contests.jpg')}}" alt="quaterly_contests">
+      </div>
+    </div>
+  
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#homePageImageCarousel" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#homePageImageCarousel" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+{% endblock %}

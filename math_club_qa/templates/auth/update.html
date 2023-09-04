@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}User Info Update{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class = row style="display: flex; justify-content: center; align-items: center">
+  <form method="post">
+    <label for="currentPassword">Current Password (*)</label>
+    <input type="password" placeholder="Current password" name="currentPassword" id="currentPassword" required>
+    <p></p>
+    <label >New Password (Leave them blank to skip)</label>
+    <fieldset>
+      <input type="password" placeholder="Password" name="password" id="password">
+      <input type="password" placeholder="Confirm Password" id="confirmPassword">
+      <p></p>
+    </fieldset>
+    <label for="email">Email</label>
+    {% if email.__len__() > 0 %}
+    <input type="email" placeholder="email" name="email" id="email" value="{{email}}">
+    {% else %}
+    <input type="email" placeholder="email" name="email" id="email" value="{{g.user['email']}}">
+    {% endif %}
+    <p></p>
+    <input type="submit" value="Update">
+  </form>
+  <script src="../../static/auth.js"></script>
+  <script>
+    password = document.getElementById("password")
+    password.onfocusout = validatePassword;
+    confirm_password = document.getElementById("confirmPassword");
+    confirm_password.onfocusout = validatePassword;
+  </script>
+</div>
+{% endblock %}

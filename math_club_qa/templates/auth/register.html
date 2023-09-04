@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class=row style="display: flex; justify-content: center; align-items: center">
+  <form method="post">
+    <label for="userName">User Name</label>
+    <input placeholder="User Name" name="userName" id="userName" value="{{userName}}" required>
+    <label >Password</label>
+    <fieldset>
+      <input type="password" placeholder="Password" name="password" id="password" required>
+      <input type="password" placeholder="Confirm Password" id="confirmPassword" required>
+    </fieldset>
+    <label for="email">Email</label>
+    <input type="email" placeholder="email" name="email" id="email" value="{{email}}" required>
+    <p></p>
+    <input type="submit" value="Register">
+  </form>
+</div>
+<script src="../../static/auth.js"></script>
+<script>
+  password = document.getElementById("password")
+  password.onfocusout = validatePassword;
+  confirm_password = document.getElementById("confirmPassword");
+  confirm_password.onfocusout = validatePassword;
+</script>
+{% endblock %}

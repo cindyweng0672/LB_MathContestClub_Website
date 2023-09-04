@@ -1,0 +1,40 @@
+{% extends 'question/select.html' %}
+
+{% block header %}
+<h1>{% block title %}Daily Question-Set{% endblock %}</h1>
+{% endblock %}
+
+{% block interaction %}
+<div id="setDiv" class="row" style="padding-top: 0.5em;">
+  <div class="col">
+    <label for="refAnswer">Reference Answer:</label>
+    <input name="refAnswer" id="refAnswer" required>
+    <label for="imageFile">Image File:</label>
+    <input type="file" name="imageFile" id="imageFile" required>
+    <input id="submit" type="submit" value="submit" onclick="setQuestion()">
+  </div>
+</div>
+<script>
+  initDeskyCalendar(
+    "datePicker",
+    "single",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    date_picking_callback_set
+  );
+  let now = new Date();
+  date_picking_callback_set(now);
+
+  function date_picking_callback_set(d) {
+    date = assembleDate(d);
+    fetchImage(date);
+    fetchRefAnswer(date);
+    submitButton = document.getElementById('submit');
+    submitButton.disabled = false;
+  }
+</script>
+{% endblock %}

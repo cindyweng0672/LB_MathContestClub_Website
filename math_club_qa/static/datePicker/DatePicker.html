@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>deskycal Date Picker Examples</title>
+    <link rel="stylesheet" href="css/deskyCal.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>deskycal Date Picker Examples</h1>
+      <p class="lead">
+        A fully responsive and highly customizable date picker / date range
+        picker component created in vanilla JavaScript.
+      </p>
+      <h2>'Single' View</h2>
+      <input id="single" />
+      <h2>Date Range</h2>
+      <input id="start" />
+      <input id="end" />
+      <h2>Disable Before/After Date</h2>
+      <input id="before" />
+      <input id="beforeafter" />
+      <h2>Callback</h2>
+      <input id="callback" />
+      <p id="output"></p>
+    </div>
+    <script src="js/deskycal.js"></script>
+    <script>
+      const d = Date.parse("04 Dec 2025 00:12:00 GMT");
+      initDeskyCalendar("single", "single");
+      initDeskyCalendar("start", "single", null, null, "end");
+      initDeskyCalendar("end", "single");
+      initDeskyCalendar(
+        "callback",
+        "single",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        call_back_function
+      );
+      const d2 = new Date();
+      const d3 = new Date();
+      d2.setTime(d2.getTime() - 2 * 3600 * 24 * 1000);
+      d3.setTime(d3.getTime() + 10 * 3600 * 24 * 1000);
+      initDeskyCalendar("before", "single", null, null, null, d2);
+      initDeskyCalendar("beforeafter", "single", null, null, null, d2, d3);
+      
+      function call_back_function(d) {
+        //accept the returned date as only argument
+        //calc date difference
+        let now = new Date();
+        let diff = d.getTime() - now.getTime();
+        let days = Math.round(diff / (3600 * 24 * 1000));
+        let out = "Date selected " + Math.abs(days) + " days ";
+        days < 0
+          ? (out += "in the past")
+          : days == 0
+          ? (out = "You selected Today")
+          : (out += "in the future");
+        document.getElementById("output").innerText = out;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Users{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-left: 0px; padding-right: 0px; margin:0px;">
+  <form class="form-inline" style="flex-direction:row" action="/auth/search" method="post">
+    <div style="display: flex; flex-direction:row ">
+      <label for="userName">User Name:</label>
+      <input type="text" class="form-control" id="userName" placeholder="Enter user name" name="userName">
+      <span>&nbsp;&nbsp;</span>
+    </div>
+    <div style="display: flex; flex-direction:row ">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      <span>&nbsp;&nbsp;</span>
+    </div>
+    <div style="display: flex; flex-direction:row">
+      <label for="userGroup">Group:</label>
+      <select class="form-control" id="userGroup" name="userGroup">
+        <option selected="selected">members</option>
+        <option>admins</option>
+      </select>
+      <span>&nbsp;&nbsp;</span>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+</div>
+<div>
+  {% set ns = namespace(defaultPageNo=0, totalPageNo=0) %}
+  {% for user in users %}
+    {% set pageNo = (loop.index + 19) // 20 %}
+    {% set newPage = (loop.index % 20) == 1 %}
+    {% set endOfpage = (loop.index % 20) == 0 %}
+    {% if loop.index == users.count %}
+      {% set endOfPage = true %}
+    {% endif %}
+    {% set ns.totalPageNo = pageNo%}
+    {% if newPage == true %}
+      <table id="table{{pageNo}}" class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Group</th>
+          </tr>
+        </thead>
+        <tbody>
+    {% endif %}    
+          <tr>
+            <td><a href="#">{{ user['userName'] }}</a></td>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['userGroup'] }}</td>
+          </tr>
+    {% if endingPage %}
+        </tbody>
+      </table>
+    {% endif %}
+  {% endfor %}
+  </tbody>
+  </table>
+  </div>
+</div>
+<div style="display: flex; justify-content: center; align-items: center">
+  <ul class="pagination">
+    <li class="page-item"><a id="prevPage" onclick="prevPage()" class="page-link" href="#">Prev Page</a></li>
+    {% if ns.totalPageNo > 0 %}
+      {% set ns.defaultPageNo = 1 %}
+    {% endif %}
+    <lable id="currentPageNo" style="margin-left: 2em; margin-top: 0.5em;">{{ns.defaultPageNo}}</lable>
+    <span style="margin-top: 0.5em;">/</span>
+    <lable id="totalPageNo" style="margin-right: 2em; margin-top: 0.5em;">{{ns.totalPageNo}}</lable>
+    <li class="page-item"><a id="nextPage" onclick = "nextPage()" class="page-link" href="#">Next Page</a></li>
+  </ul>
+</div>
+<script>
+
+  function nextPage(){
+    let totalPageNo = document.getElementById("totalPageNo").textContent;
+    let currentPageNo = document.getElementById("currentPageNo").textContent;
+    setTables(parseInt(currentPageNo) + 1, totalPageNo);
+  }
+  function prevPage(){
+    let totalPageNo = document.getElementById("totalPageNo").textContent;
+    let currentPageNo = document.getElementById("currentPageNo").textContent;
+    setTables(parseInt(currentPageNo) - 1, totalPageNo);
+  }  
+  function setTables(displayTableNo, totalTableNo){
+    if(totalTableNo <= 0)
+      return;
+    displayTableNo = Math.max(1, displayTableNo);
+    displayTableNo = Math.min(totalTableNo, displayTableNo);
+    for(i = 1; i <= totalTableNo; i++ ){
+      let tableId = "table" + i;
+      tableElement = document.getElementById(tableId);
+      if(i == displayTableNo)
+        tableElement.style.display = "table";
+      else
+        tableElement.style.display = "none";
+    }
+    document.getElementById("currentPageNo").textContent = displayTableNo;
+  }
+
+  totalPageNo = document.getElementById("totalPageNo").textContent;
+  currentPageNo = document.getElementById("currentPageNo").textContent;
+  setTables(currentPageNo, totalPageNo);
+</script>
+{% endblock %}
+
