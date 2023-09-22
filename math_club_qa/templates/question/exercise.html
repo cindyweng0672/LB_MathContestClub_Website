@@ -16,6 +16,8 @@
         <text name="refAnswer" id="refAnswer">Not Available</text>
     </div>
 </div>
+{% block extension%}
+{% endblock %}
 <script>
     initDeskyCalendar(
         "datePicker",
@@ -33,7 +35,7 @@
 
     async function date_picking_callback_exercise(d) {
         date = assembleDate(d);
-        status = await fetchImage(date);
+        status = await fetchImage(date, "question");
         if (status != 200) {
             exerciseDiv = document.getElementById("exercise");
             exerciseDiv.style.display = "none";

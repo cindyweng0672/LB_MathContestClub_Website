@@ -14,8 +14,9 @@ function assembleDate(d){
     return dateString;
   }
   
-  async function fetchImage(pickedDate) {
-    const response = await fetch('/question/getImage', {
+  async function fetchImage(pickedDate, category) {
+    const functionChoice='/'+category+'/getImage'
+    const response = await fetch(functionChoice, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -29,7 +30,8 @@ function assembleDate(d){
         if(contentType.includes('image')){
           const blob = await response.blob();
           const imageUrl = URL.createObjectURL(blob);
-          const imageElement = document.getElementById("question-img");
+          const imageDisplayElement=category+"-img"
+          const imageElement = document.getElementById(imageDisplayElement);
           imageElement.src = imageUrl;
         };
     }
@@ -87,7 +89,7 @@ function assembleDate(d){
   }
   
   
-  function setQuestion(){
+  function setQuestion(category){
     date = document.getElementById("datePicker").value;
     refAnswer = document.getElementById("refAnswer").value;
     refAnswer = refAnswer.trim();
@@ -101,7 +103,8 @@ function assembleDate(d){
     formData.append('refAnswer', refAnswer);
     formData.append('image', file);
     // Send the POST request
-    fetch('/question/set', {
+    const tabChoice='/'+category+'/set'
+    fetch(tabChoice, {
         method: 'POST',
         body: formData
     })
