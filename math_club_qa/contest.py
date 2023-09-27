@@ -20,7 +20,6 @@ def exercise():
     elif g.user['userGroup'] == 'admins':
         return render_template('/contest/set.html')
     return render_template('/contest/exercise.html')
-    
 
 @bp.route("/set",  methods=['POST'])
 @login_required

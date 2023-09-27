@@ -15,11 +15,11 @@ bp = Blueprint('question', __name__, url_prefix='/question')
 @bp.route('/select')
 def select():
     if g.user is None:
-        return render_template('/question/select.html')
+        return render_template('/question/select.html', totalQ=50)
     elif g.user['userGroup'] == 'members':
-        return render_template('/question/exercise.html')
+        return render_template('/question/exercise.html', totalQ=50)
     else:
-        return render_template('/question/set.html')
+        return render_template('/question/set.html', totalQ=50)
 
 @bp.route('/getImage', methods=['POST'])
 def getImage():
