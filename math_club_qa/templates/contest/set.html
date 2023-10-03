@@ -42,7 +42,7 @@
 
   function date_picking_callback_set(d) {
     date = assembleDate(d);
-    fetchImage(date, "contest");
+    fetchImage(date, 1, "contest");
     fetchRefAnswer(date);
     submitButton = document.getElementById('submit');
     submitButton.disabled = false;

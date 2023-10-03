@@ -16,10 +16,10 @@ bp = Blueprint('contest', __name__, url_prefix='/contest')
 @login_required
 def exercise():
     if g.user['userGroup'] == 'members':
-        return render_template('/contest/exercise.html')
+        return render_template('/contest/exercise.html', totalQ=50)
     elif g.user['userGroup'] == 'admins':
-        return render_template('/contest/set.html')
-    return render_template('/contest/exercise.html')
+        return render_template('/contest/set.html', totalQ=50)
+    return render_template('/contest/exercise.html', totalQ=50)
 
 @bp.route("/set",  methods=['POST'])
 @login_required

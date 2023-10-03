@@ -37,7 +37,7 @@
 
     async function date_picking_callback_exercise(d) {
         date = assembleDate(d);
-        status = await fetchImage(date, "question");
+        status = await fetchImage(date, 1, "question");
         if (status != 200) {
             exerciseDiv = document.getElementById("exercise");
             exerciseDiv.style.display = "none";
@@ -53,6 +53,11 @@
                 refAnswerElem.textContent = 'No exposure.'
             }
         }
+    }
+
+    function getListNum() {
+        const n = document.getElementById('tags').selectedIndex;
+        fetchImage(date, n, "question")
     }
 </script>
 {% endblock %}

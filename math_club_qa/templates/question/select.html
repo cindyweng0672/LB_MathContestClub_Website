@@ -28,8 +28,8 @@
       {% block questionNavigator %}
       <div>
         {% for Qnum in range(1,totalQ) %}
-        <ul>
-          <li>Question{{Qnum}}</li>
+        <ul id="tags">
+          <li onclick="getListNum(this)"><a href="#">Question{{Qnum}}</a></li>
         </ul>
         {% endfor %}
       </div>
@@ -58,10 +58,16 @@
   );
   let now = new Date();
   date_picking_callback_basic(now);
-
-  function date_picking_callback_basic(d) {
+  var date;
+  function date_picking_callback_basic(d, n) {
     date = assembleDate(d);
-    fetchImage(date, "question");
+    //------v
+    fetchImage(date, 1, "question");
+  }
+
+  function getListNum(listItem) {
+    const n = listItem.textContent.substring(8);
+    fetchImage(date, n, "question")
   }
 </script>
 {% endblock %}

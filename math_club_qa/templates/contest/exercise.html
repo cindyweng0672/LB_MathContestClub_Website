@@ -26,7 +26,7 @@
 
     async function date_picking_callback_exercise(d) {
         date = assembleDate(d);
-        status = await fetchImage(date, "contest");
+        status = await fetchImage(date, 1, "contest");
         if (status != 200) {
             exerciseDiv = document.getElementById("exercise");
             exerciseDiv.style.display = "none";

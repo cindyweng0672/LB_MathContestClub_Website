@@ -14,7 +14,7 @@ function assembleDate(d){
     return dateString;
   }
   
-  async function fetchImage(pickedDate, category) {
+  async function fetchImage(pickedDate, questionN, category) {
     const functionChoice='/'+category+'/getImage'
     const response = await fetch(functionChoice, {
       method: 'POST',
@@ -22,7 +22,8 @@ function assembleDate(d){
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        date: pickedDate
+        date: pickedDate,
+        questionNum: questionN
       })
     });
     if(response.ok){

@@ -27,6 +27,7 @@ def getImage():
     if not json_data:
         return 'Invalid JSON', 400
     date = json_data.get('date')
+    questionN = json_data.get('questionNum')
 
     imageType = 'image/png'
     dir = os.path.dirname(__file__)
@@ -34,12 +35,12 @@ def getImage():
         dir = dir + '\\' + 'questionImages\\'
     else:
         dir = dir + '/' + 'questionImages/'
-    fileName =  date + '.png'
+    fileName =  date + "_" + questionN+ '.png'
     existing = os.path.exists(dir + fileName)
 
     if(not existing):
         imageType = 'image/jpg'
-        fileName = date + '.jpg'
+        fileName = date + "_" + questionN + '.jpg'
         existing = os.path.exists(dir + fileName)
     
     if(not existing):
