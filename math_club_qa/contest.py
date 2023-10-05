@@ -25,6 +25,7 @@ def exercise():
 @login_required
 def setQuestion():
     date = request.form['date']
+    questionN = request.form['questionN']
     if(date is None):
         return "Date is required.", 400
     dir = os.path.dirname(__file__)
@@ -32,8 +33,8 @@ def setQuestion():
         dir = dir + '\\' + 'contestImages\\'
     else:
         dir = dir + '/' + 'contestImages/'
-    jpgExisting = os.path.exists(dir + date + '.jpg')
-    pngExisting = os.path.exists(dir + date + '.png')
+    jpgExisting = os.path.exists(dir + date + '_' + questionN + '.jpg')
+    pngExisting = os.path.exists(dir + date + '_' + questionN + '.png')
     existing = jpgExisting or pngExisting
     returnMessage = ''
 
@@ -41,20 +42,20 @@ def setQuestion():
     if(file is not None):
         fnEx = file.filename[-3:]
 
-        fileName = date + '.' + fnEx
+        fileName = date + '_' + questionN + '.' + fnEx
         i = 0
         jpgNewName = None
         pngNewName = None
         while existing:
             i = i + 1
-            jpgNewName = dir + date + '(' + str(i) + ').jpg'
-            pngNewName = dir + date + '(' + str(i) + ').png'
+            jpgNewName = dir + date + '_' + questionN + '(' + str(i) + ').jpg'
+            pngNewName = dir + date + '_' + questionN + '(' + str(i) + ').png'
             existing = os.path.exists(jpgNewName) or os.path.exists(pngNewName)
 
         if(jpgExisting):
-            os.rename(dir + date + '.jpg', jpgNewName)
+            os.rename(dir + date + '_' + questionN + '.jpg', jpgNewName)
         if(pngExisting):
-            os.rename(dir + date + '.png',  pngNewName)
+            os.rename(dir + date + '_' + questionN + '.png',  pngNewName)
             
         open(dir + fileName, 'wb').write(file.read())
         existing = True
@@ -62,9 +63,9 @@ def setQuestion():
     if(existing):
         refAnswer = request.form['refAnswer']
         if(refAnswer is not None):
-            sql = 'insert into questions(dateFor, refAnswer, setterId, setterName) values (?, ?, ?, ?)'
+            sql = 'insert into questions(dateFor, questionNum, refAnswer, setterId, setterName) values (?, ?, ?, ?, ?)'
             db = get_db()
-            db.execute(sql, (date, refAnswer, g.user['id'], g.user['userName']))
+            db.execute(sql, (date, questionN, refAnswer, g.user['id'], g.user['userName']))
             db.commit()
             returnMessage += 'Reference answer is set.'
     else:
@@ -77,6 +78,7 @@ def getImage():
     if not json_data:
         return 'Invalid JSON', 400
     date = json_data.get('date')
+    questionN = json_data.get('questionNum')
 
     imageType = 'image/png'
     dir = os.path.dirname(__file__)
@@ -84,12 +86,12 @@ def getImage():
         dir = dir + '\\' + 'ContestImages\\'
     else:
         dir = dir + '/' + 'ContestImages/'
-    fileName =  date + '.png'
+    fileName =  date + "_" + questionN+ '.png'
     existing = os.path.exists(dir + fileName)
 
     if(not existing):
         imageType = 'image/jpg'
-        fileName = date + '.jpg'
+        fileName =  date + "_" + questionN+ '.jpg'
         existing = os.path.exists(dir + fileName)
     
     if(not existing):

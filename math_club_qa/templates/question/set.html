@@ -12,7 +12,7 @@
     <label for="imageFile">Image File:</label>
     <input type="file" name="imageFile" id="imageFile" required>
     {% block setQuestion %}
-    <input id="submit" type="submit" value="submit" onclick="setQuestion('question')">
+    <input id="submit" type="submit" value="submit" onclick="setQuestion('question', n)">
     {% endblock %}
   </div>
 </div>
@@ -30,7 +30,9 @@
   );
   let now = new Date();
   date_picking_callback_set(now);
-
+  var date;
+  var n;
+  
   function date_picking_callback_set(d) {
     date = assembleDate(d);
     fetchImage(date, 1, "question");
@@ -39,7 +41,11 @@
     submitButton.disabled = false;
   }
 
-  
+  function getListNum(listItem) {
+    n = listItem.textContent.substring(8);
+    fetchImage(date, n, "question")
+  }
+
 </script>
 {% endblock %}
 

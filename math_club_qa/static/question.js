@@ -90,7 +90,7 @@ function assembleDate(d){
   }
   
   
-  function setQuestion(category){
+  function setQuestion(category, questionNum){
     date = document.getElementById("datePicker").value;
     refAnswer = document.getElementById("refAnswer").value;
     refAnswer = refAnswer.trim();
@@ -103,6 +103,7 @@ function assembleDate(d){
     formData.append('date', date);
     formData.append('refAnswer', refAnswer);
     formData.append('image', file);
+    formData.append('questionN', questionNum);
     // Send the POST request
     const tabChoice='/'+category+'/set'
     fetch(tabChoice, {
