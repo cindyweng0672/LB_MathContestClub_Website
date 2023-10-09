@@ -34,4 +34,3 @@ CREATE TABLE "userAnswers" (
   "correction" TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
-

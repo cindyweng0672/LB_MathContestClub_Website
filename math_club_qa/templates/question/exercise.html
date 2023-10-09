@@ -16,8 +16,6 @@
         <text name="refAnswer" id="refAnswer">Not Available</text>
     </div>
 </div>
-{% block extension%}
-{% endblock %}
 
 {% block fetchImage %}
 <script>
@@ -53,11 +51,6 @@
                 refAnswerElem.textContent = 'No exposure.'
             }
         }
-    }
-
-    function getListNum() {
-        const n = document.getElementById('tags').selectedIndex;
-        fetchImage(date, n, "question")
     }
 </script>
 {% endblock %}

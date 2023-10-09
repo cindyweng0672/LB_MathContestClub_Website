@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -16,10 +18,16 @@ bp = Blueprint('contest', __name__, url_prefix='/contest')
 @login_required
 def exercise():
     if g.user['userGroup'] == 'members':
-        return render_template('/contest/exercise.html', totalQ=50)
+        endTime = logStartTime()
+        return render_template('/contest/exercise.html', totalQ=11, endTime=endTime)
     elif g.user['userGroup'] == 'admins':
-        return render_template('/contest/set.html', totalQ=50)
-    return render_template('/contest/exercise.html', totalQ=50)
+        return render_template('/contest/set.html', totalQ=11)
+    return render_template('/contest/confirm.html')
+
+@bp.route('/confirm')
+@login_required
+def confirm():
+    return render_template('/contest/confirm.html')
 
 @bp.route("/set",  methods=['POST'])
 @login_required
@@ -86,12 +94,13 @@ def getImage():
         dir = dir + '\\' + 'ContestImages\\'
     else:
         dir = dir + '/' + 'ContestImages/'
-    fileName =  date + "_" + questionN+ '.png'
+    
+    fileName =  date + "_" + str(questionN) + '.png'
     existing = os.path.exists(dir + fileName)
 
     if(not existing):
         imageType = 'image/jpg'
-        fileName =  date + "_" + questionN+ '.jpg'
+        fileName =  date + "_" + str(questionN) + '.jpg'
         existing = os.path.exists(dir + fileName)
     
     if(not existing):
@@ -104,3 +113,18 @@ def getImage():
         response.status = 200
     return response
 
+def logStartTime():
+    userId = g.user['id']
+    userName = g.user['userName']
+    startTime=datetime.now()
+    endTime=datetime.now()+timedelta(hours=3)
+
+    sql = 'insert into userContestLog (userId, userName, startTime, endTime) values(?, ?, ?, ?)' 
+    db = get_db()
+    db.execute(sql, (userId, userName, startTime, endTime))
+    db.commit()
+
+    #endTimeDate=endTime.substring()
+
+    return endTime
+    

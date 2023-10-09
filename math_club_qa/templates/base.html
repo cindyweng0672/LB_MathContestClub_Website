@@ -27,7 +27,7 @@
           <a class="nav-link" href="{{ url_for('question.select') }}">Question</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('contest.exercise') }}">Contest</a>
+          <a class="nav-link" href="{{ url_for('contest.confirm') }}">Contest</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Activities</a>
@@ -69,6 +69,7 @@
     {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
     {% endfor %}
+    {% block timer %}{% endblock %}
     {% block content %}{% endblock %}
   </section>
 </body>
