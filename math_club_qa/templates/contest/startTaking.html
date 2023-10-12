@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="../../static/question.js"></script>
+<div>
+  <h2>Start the Contest</h2>
+  <div class="form-group">
+    <label for="contest">Select contest:</label>
+    <select class="form-control" id="contest">
+      {% for contest in contests %}
+      <option>{{contest['date']}} </option>
+      {% endfor %}
+    </select>
+  </div>
+  <p>Click the button to start the contest <br> </br>Duration: 3 hour (you can hand in early if you wish)</p>
+  <button onclick="startTaking()">Start!</button>
+</div>
+<script>
+  function startTaking() {
+    start = confirm("Start the Timer?");
+    if (start) {
+      var contestSelect = document.getElementById('contest');
+      var date = contestSelect.value;
+      fetch('/contest/logStartTime', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          date: date
+        })
+      })
+      .then(response => { return response.text() })
+      .then(text => {
+        var params = { 'date' : date, 'leftTime' : text};         
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", '/contest/take');
+        form.setAttribute("target", '_self');
+        var dateInput = document.createElement('input');
+        for (var i in params) {
+          if (params.hasOwnProperty(i)) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = i;
+            input.value = params[i];
+            form.appendChild(input);
+          }
+        }              
+        document.body.appendChild(form);                       
+        form.submit();                 
+        document.body.removeChild(form);        
+      }) 
+      .catch(error => {
+         console.error('Error:', error);
+      });
+    }
+  }
+</script>
+{% endblock %}

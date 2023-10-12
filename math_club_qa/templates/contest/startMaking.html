@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="../../static/question.js"></script>
+<div>
+  <h2>Make the Contest</h2>
+  <div class="form-group">
+    <label for="contest">Select contest:</label>
+    <select class="form-control" id="contest">
+      {% for contest in contests %}
+      <option>{{contest['date']}} </option>
+      {% endfor %}
+    </select>
+  </div>
+  <p>Click the button to start making the contest.</p>
+  <button onclick="startMaking()">Make</button>
+</div>
+<script>
+  function startMaking() {
+    var contestSelect = document.getElementById('contest');
+    var date = contestSelect.value;
+    var params = { 'date': date };
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", '/contest/make');
+    form.setAttribute("target", '_self');
+    var dateInput = document.createElement('input');
+    for (var i in params) {
+      if (params.hasOwnProperty(i)) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = i;
+        input.value = params[i];
+        form.appendChild(input);
+      }
+    }
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+  }
+</script>
+{% endblock %}

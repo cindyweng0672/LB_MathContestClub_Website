@@ -30,8 +30,8 @@ def create_app(test_config=None):
     from . import clubHome
     app.register_blueprint(clubHome.bp)
     app.add_url_rule('/', endpoint='home')
-    from . import question
-    app.register_blueprint(question.bp)
+    from . import daily
+    app.register_blueprint(daily.bp)
     from . import auth
     app.register_blueprint(auth.bp)
     from . import contest

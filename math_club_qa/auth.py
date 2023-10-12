@@ -148,7 +148,7 @@ def search():
     if request.method == 'POST':
         userName = request.form['userName']
         email = request.form['email']
-        userGroup = request.form['userGroup']
+        group = request.form['group']
         filterCondition = ''
         if(userName != ''):
             filterCondition += 'userName=\'' + userName + '\''
@@ -156,11 +156,11 @@ def search():
             if(filterCondition != ''):
                 filterCondition += ' and '
             filterCondition += 'email=\'' + email + '\''
-        if(userGroup != ''):
+        if(group != ''):
             if(filterCondition != ''):
                 filterCondition += ' and '
-            filterCondition += 'userGroup=\'' + userGroup + '\''
-        sql = 'SELECT id, userName, email, userGroup, registeringTime, deactivatingTime' \
+            filterCondition += 'group=\'' + group + '\''
+        sql = 'SELECT id, userName, email, group, registeringTime, deactivatingTime' \
               ' FROM users'
         if(filterCondition != ""):
            sql += " WHERE " + filterCondition

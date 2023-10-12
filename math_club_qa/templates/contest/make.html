@@ -1,0 +1,31 @@
+{% extends 'contest/common.html' %}
+
+{% block header %}
+<h1>{% block title %}Maknig Inter-School Contest {% endblock %}</h1>
+{% endblock %}
+
+{% block answer %}
+<div id="setDiv" class="row" style="padding-top: 0.5em;">
+  <div class="col-md-2"> <!--place holder-->
+
+  </div>
+  <div class="col">
+    <label for="refAnswer">Reference Answer:</label>
+    <input name="refAnswer" id="refAnswer" required>
+    <label for="imageFile">Image File:</label>
+    <input type="file" name="imageFile" id="imageFile" required>
+    <input id="submit" type="submit" value="submit" onclick="setQuestion(selectedQuestionNum, 'contest')">
+  </div>
+</div>
+{% endblock %}
+{% block interactionEx %}
+<script>
+  function selectQuestionEx(){
+    getRefAnswer(date, selectedQuestionNum, 'contest');
+    fileInput = document.getElementById('imageFile');
+    fileInput.value = null;
+    submitButton = document.getElementById('submit');
+    submitButton.disabled = false;    
+  }  
+</script>
+{% endblock %}

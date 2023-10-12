@@ -18,8 +18,8 @@
       <span>&nbsp;&nbsp;</span>
     </div>
     <div style="display: flex; flex-direction:row">
-      <label for="userGroup">Group:</label>
-      <select class="form-control" id="userGroup" name="userGroup">
+      <label for="group">Group:</label>
+      <select class="form-control" id="group" name="group">
         <option selected="selected">members</option>
         <option>admins</option>
       </select>
@@ -52,7 +52,7 @@
           <tr>
             <td><a href="#">{{ user['userName'] }}</a></td>
             <td>{{ user['email'] }}</td>
-            <td>{{ user['userGroup'] }}</td>
+            <td>{{ user['group'] }}</td>
           </tr>
     {% if endOfPage %}
         </tbody>

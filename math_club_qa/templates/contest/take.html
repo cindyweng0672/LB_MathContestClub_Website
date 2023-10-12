@@ -1,0 +1,64 @@
+{% extends 'contest/common.html' %}
+
+{% block header %}
+<h1>{% block title %}Taking Inter-School Contest{% endblock %}</h1>
+{% endblock %}
+
+{% block timer %}
+<div class="col-md-3">
+  <h2>time left:</h2>
+</div>
+<div class="col">
+  <h2 id = "timer">{{leftTime}}</h2>
+</div>
+{% endblock %}
+
+{% block answer %}
+<div id="exercise" class="row" style="padding-top: 0.5em;">
+  <div class="col-md-2"> <!--place holder-->
+
+  </div>
+  <div class="col">
+      <label for="answer">Your Answer:</label>
+      <input name="answer" id="answer">
+      <input id='submit' type="submit" value="submit" onclick="submitAnwser(selectedQuestionNum, 'contest')">
+  </div>
+</div>
+{% endblock %}
+{% block interactionEx %}
+<script>
+  async function selectQuestionEx(){
+    imgElement = document.getElementById('question-img');
+    status = imgElement.textContent;
+    exerciseDiv = document.getElementById("exercise");
+    if (status != '200') {
+        exerciseDiv.style.display = "none";
+    }
+    else {
+        exerciseDiv.style.display = null;
+        status = await getUserAnswer(date, selectedQuestionNum, 'contest');
+    } 
+  }
+
+  var innert = document.getElementById("timer").textContent;
+  var countDownDate = new Date(innert).getTime();
+  var x = setInterval(function() {
+    var now = new Date().getTime();
+
+    var distance = countDownDate - now;
+    if(distance > 0){
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+    }
+    if (distance < 0) {
+      //clearInterval(x);
+      submitElem = document.getElementById("submit");
+      submitElem.style.display = "none";
+      document.getElementById("timer").innerHTML = "EXPIRED";
+      }
+  }, 1000);
+</script>
+{% endblock %}

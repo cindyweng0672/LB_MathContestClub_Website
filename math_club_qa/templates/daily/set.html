@@ -1,10 +1,10 @@
-{% extends 'question/select.html' %}
+{% extends 'daily/browse.html' %}
 
 {% block header %}
 <h1>{% block title %}Daily Question-Set{% endblock %}</h1>
 {% endblock %}
 
-{% block interaction %}
+{% block interactionEx %}
 <div id="setDiv" class="row" style="padding-top: 0.5em;">
   <div class="col">
     <label for="refAnswer">Reference Answer:</label>
@@ -12,35 +12,20 @@
     <label for="imageFile">Image File:</label>
     <input type="file" name="imageFile" id="imageFile" required>
     {% block setQuestion %}
-    <input id="submit" type="submit" value="submit" onclick="setQuestion('question', n)">
+    <input id="submit" type="submit" value="submit" onclick="setQuestion(n, 'daily')">
     {% endblock %}
   </div>
 </div>
 <script>
-  initDeskyCalendar(
-    "datePicker",
-    "single",
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    date_picking_callback_set
-  );
-  let now = new Date();
-  date_picking_callback_set(now);
   var date;
-  var n;
-  
-  function date_picking_callback_set(d) {
+  var n = 1;
+  function date_picking_callback(d) {
     date = assembleDate(d);
-    fetchImage(date, 1, "question");
-    fetchRefAnswer(date);
+    getImage(date, n, 'daily');
+    getRefAnswer(date, n, 'daily');
     submitButton = document.getElementById('submit');
     submitButton.disabled = false;
   }
-
 </script>
 {% endblock %}
 

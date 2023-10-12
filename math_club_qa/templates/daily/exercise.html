@@ -1,41 +1,26 @@
-{% extends 'question/select.html' %}
+{% extends 'daily/browse.html' %}
 
 {% block header %}
 <h1>{% block title %}Daily Question-Exercise{% endblock %}</h1>
 {% endblock %}
 
-{% block interaction %}
+{% block interactionEx %}
 <div id="exercise" class="row" style="padding-top: 0.5em;">
     <div class="col">
         <label for="answer">Your Answer:</label>
         <input name="answer" id="answer">
-        <input id='submit' type="submit" value="submit" onclick="submitAnwser()">
+        <input id='submit' type="submit" value="submit" onclick="submitAnwser(1, 'daily')">
     </div>
     <div class="col">
         <label for="refAnswer">Reference Answer:</label>
         <text name="refAnswer" id="refAnswer">Not Available</text>
     </div>
 </div>
-
-{% block fetchImage %}
 <script>
-    initDeskyCalendar(
-        "datePicker",
-        "single",
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        date_picking_callback_exercise
-    );
-    let now = new Date();
-    date_picking_callback_exercise(now);
-
-    async function date_picking_callback_exercise(d) {
+    async function date_picking_callback(d) {
         date = assembleDate(d);
-        status = await fetchImage(date, 1, "question");
+        status = await getImage(date, 1, 'daily');
+        //no question
         if (status != 200) {
             exerciseDiv = document.getElementById("exercise");
             exerciseDiv.style.display = "none";
@@ -43,15 +28,16 @@
         else {
             exerciseDiv = document.getElementById("exercise");
             exerciseDiv.style.display = "block";
-            status = await fetchUserAnswer(date);
+            status = await getUserAnswer(date, 1, 'daily');
             if (status == 200)
-                status = await fetchRefAnswer(date);
+                status = await getRefAnswer(date, 1, 'daily');
             else{
                 refAnswerElem = document.getElementById("refAnswer");
                 refAnswerElem.textContent = 'No exposure.'
+                submitButton = document.getElementById('submit');
+                submitButton.disabled = false;
             }
         }
     }
 </script>
-{% endblock %}
 {% endblock %}

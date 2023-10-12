@@ -24,22 +24,13 @@
           <a class="nav-link" href="{{ url_for('home.home') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('question.select') }}">Question</a>
+          <a class="nav-link" href="{{ url_for('daily.start') }}">Daily</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('contest.confirm') }}">Contest</a>
+          <a class="nav-link" href="{{ url_for('contest.start') }}">Contest</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Activities</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">POTD</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">FAQ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact Us</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -49,7 +40,7 @@
             {% if g.user %}
             <a class="dropdown-item" href="{{ url_for('auth.update') }}">{{ g.user['userName'] }}</a>
             <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
-            {% if g.user['userGroup'] == 'admins' %}
+            {% if g.user['group'] == 'admins' %}
               <a class="dropdown-item" href="{{ url_for('auth.search') }}">Search Users</a>
             {% endif %}
             {% else %}
@@ -69,7 +60,6 @@
     {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
     {% endfor %}
-    {% block timer %}{% endblock %}
     {% block content %}{% endblock %}
   </section>
 </body>
