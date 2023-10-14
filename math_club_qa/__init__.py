@@ -36,5 +36,7 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
     from . import contest
     app.register_blueprint(contest.bp)
+    from . import activities
+    app.register_blueprint(activities.bp)
 
     return app
