@@ -85,8 +85,8 @@ def logStartTimeFun(userId, userName, date):
         'SELECT * FROM contestUserLog WHERE userId = ? and contestDate = ?', (userId, date)
     ).fetchone()
     if log is None:
-        startTime=datetime.now()
-        endTime=datetime.now() + timedelta(hours=3)
+        startTime=datetime.utcnow()
+        endTime=datetime.utcnow() + timedelta(hours=3)
         sql = 'insert into contestUserLog (userId, userName, contestDate, startTime, endTime) values(?, ?, ?, ?, ?)' 
         db = get_db()
         db.execute(sql, (userId, userName, date, startTime, endTime))
